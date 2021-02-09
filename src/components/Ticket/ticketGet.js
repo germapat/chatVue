@@ -22,7 +22,6 @@ export default {
           message: 'Submitted'
         })
         this.ticket = resp.data.data
-        console.log(resp.data.data)
       })
         .catch((_) => {
           this.ticket.name = null
