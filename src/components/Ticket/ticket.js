@@ -16,9 +16,8 @@ export default {
       return Validations.isValidEmail(val)
     },
     async emailValidate () {
-      const emali = this.isValidEmail(this.email) | false
-      console.log(emali)
-      if (!emali) {
+      const emailVali= this.isValidEmail(this.email) | false
+      if (!emailVali) {
         return
       }
       await profileService.getUserByemail(this.email).then(resp => {
@@ -28,7 +27,6 @@ export default {
           icon: 'cloud_done',
           message: 'Email found'
         })
-        console.log(resp.data.data._id, 'rep')
         this.userId = resp.data.data._id
       })
         .catch((_) => {
