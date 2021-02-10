@@ -16,7 +16,7 @@ export default {
       return Validations.isValidEmail(val)
     },
     async emailValidate () {
-      const emailVali= this.isValidEmail(this.email) | false
+      const emailVali = this.isValidEmail(this.email) | false
       if (!emailVali) {
         return
       }

@@ -20,9 +20,6 @@ export default {
   sockets: {
     connect: function () {
       console.log('socket connected German')
-    },
-    customEmit: function (data) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
     }
   },
   methods: {
@@ -47,6 +44,7 @@ export default {
             })
             this.nameDisable = true
             this.messages = res.data.data.message
+            this.text = null
             this.$socket.emit('msgToServer', res.data.data)
           })
           .catch((_) => {
@@ -63,12 +61,13 @@ export default {
       return this.name.length > 0 && this.text.length > 0
     }
   },
-  async mounted () {
+  mounted () {
+    this.$refs.name.focus()
     this.name = this.$route.params.name
     this.email = this.$route.params.email
     if (this.email !== undefined) {
       this.type = 'user'
-      await chatService.getChatByEmail(this.email)
+      chatService.getChatByEmail(this.email)
         .then((res) => {
           this.$q.notify({
             color: 'green-4',
@@ -83,8 +82,10 @@ export default {
         })
     }
     this.sockets.subscribe('msgToClient', (data) => {
-      this.email = data.email
-      this.messages = data.message
+      if (data) {
+        this.email = data.email
+        this.messages = data.message
+      }
     })
   }
 }

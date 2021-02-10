@@ -4,10 +4,11 @@
       <h5 class="text-center">{{ title }}</h5>
       <div id="chat">
         <q-input
+          ref="name"
           v-model="name"
           label="name *"
           lazy-rules
-          :rules="[(val) => (val && val.length > 0) || 'Please type something']"
+          :rules="[val => !!val || 'Please type something', validateInput, ]"
           :disable="nameDisable"
         />
         <br />
